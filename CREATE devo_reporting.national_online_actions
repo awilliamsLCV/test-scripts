@@ -3,43 +3,38 @@
     --AS    
     
 SELECT cm.id as campaignmemberid,
-        campaignid
-        contactid
-        status
-        hasresponded
-        createddate
-        createdbyid
+        cm.campaignid,
+        cm.contactid,
+        cm.status,
+        cm.hasresponded,
+        cm.createddate,
+        cm.createdbyid,
         u.name AS createdby_name,
-        firstrespondeddate
-        cm.name as campaignmember_name
-        firstname
-        lastname
-        email
-        leadsource
-        type
-        p2a__external_membership_id__c
-        p2a__membership_created_date__c
-        p2a__source__c as action_source
-        alertorsurveyid__c
-        lcrm_sf_campaign_member_id__c
-        campaign_code__c
-        p2a__utm_campaign__c
-        p2a__utm_content__c
-        p2a__utm_medium__c
-        p2a__utm_source__c
-        p2a__utm_term__c
-        campaign_type__c
-        campaign_member_type__c
-        campaign_c3_c4__c
-        campaign_online_offline__c
-        c.advocacy_type__c as campaign_advocacy_type
+        cm.firstrespondeddate,
+        cm.name as campaignmember_name,
+        cm.firstname,
+        cm.lastname,
+        cm.email,
+        cm.p2a__external_membership_id__c,
+        cm.p2a__membership_created_date__c,
+        cm.p2a__source__c as cm_action_source,
+        cm.p2a__utm_campaign__c,
+        cm.p2a__utm_content__c,
+        cm.p2a__utm_medium__c,
+        cm.p2a__utm_source__c,
+        cm.p2a__utm_term__c,
+        cm.campaign_type__c,
+        cm.campaign_member_type__c,
+        cm.campaign_c3_c4__c,
+        cm.campaign_online_offline__c,
+        c.advocacy_type__c as campaign_advocacy_type,
         c.name as campaign_name,
-        c.startdate as campaign_startdate
-        c.strategic_program__c as strategic_program
-        c.channel__c as campaign_channel
-        c.advertising_source__c as campaign_advertising_source
+        c.startdate as campaign_startdate,
+        c.strategic_program__c as strategic_program,
+        c.channel__c as campaign_channel,
+        c.advertising_source__c as campaign_advertising_source,
         c.paid_organic__c as paid_organic, 
-        s.name__c
+        s.name as segment_name,
         s.segment_channel__c as segment_channel, 
         s.segment_advertising_source__c as segment_advertising_source,
         con.source__c as contact_source
@@ -60,5 +55,5 @@ on cm.p2a__source__c = s.code__c
 LEFT JOIN npsp_imports.users u 
 ON   u.id=cm.createdbyid
 
-WHERE  campaign_type__c='Advocacy'
+WHERE  cm.campaign_type__c='Advocacy'
 ;
