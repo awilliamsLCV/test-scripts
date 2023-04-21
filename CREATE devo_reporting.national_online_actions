@@ -1,5 +1,5 @@
---DROP TABLE IF EXISTS devo_reporting.national_online_actions;
---CREATE TABLE devo_reporting.national_online_actions
+--DROP TABLE IF EXISTS devo_reporting.national_actions;
+--CREATE TABLE devo_reporting.national_actions
     --AS    
     
 SELECT cm.id as campaignmemberid,
@@ -60,6 +60,5 @@ on cm.p2a__source__c = s.code__c
 LEFT JOIN npsp_imports.users u 
 ON   u.id=cm.createdbyid
 
-WHERE  campaign_online_offline__c='Online'
-AND campaign_type__c='Advocacy'
+WHERE  campaign_type__c='Advocacy'
 ;
