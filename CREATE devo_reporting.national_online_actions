@@ -1,0 +1,65 @@
+--DROP TABLE IF EXISTS devo_reporting.national_online_actions;
+--CREATE TABLE devo_reporting.national_online_actions
+    --AS    
+    
+SELECT cm.id as campaignmemberid,
+        campaignid
+        contactid
+        status
+        hasresponded
+        createddate
+        createdbyid
+        u.name AS createdby_name,
+        firstrespondeddate
+        cm.name as campaignmember_name
+        firstname
+        lastname
+        email
+        leadsource
+        type
+        p2a__external_membership_id__c
+        p2a__membership_created_date__c
+        p2a__source__c as action_source
+        alertorsurveyid__c
+        lcrm_sf_campaign_member_id__c
+        campaign_code__c
+        p2a__utm_campaign__c
+        p2a__utm_content__c
+        p2a__utm_medium__c
+        p2a__utm_source__c
+        p2a__utm_term__c
+        campaign_type__c
+        campaign_member_type__c
+        campaign_c3_c4__c
+        campaign_online_offline__c
+        c.advocacy_type__c as campaign_advocacy_type
+        c.name as campaign_name,
+        c.startdate as campaign_startdate
+        c.strategic_program__c as strategic_program
+        c.channel__c as campaign_channel
+        c.advertising_source__c as campaign_advertising_source
+        c.paid_organic__c as paid_organic, 
+        s.name__c
+        s.segment_channel__c as segment_channel, 
+        s.segment_advertising_source__c as segment_advertising_source,
+        con.source__c as contact_source
+        --CAST(r.createddate AS DATE) AS role_date,
+        --COALESCE(LEFT(internal_grant_contract_number__c,4),CAST(fiscalyear as varchar(4))) as year,
+        --fiscalquarter as quarter,
+        --DATE_PART('month',opp.closedate) as month,
+
+FROM npsp_imports.campaign_members cm
+LEFT JOIN npsp_imports.campaign c
+on cm.campaignid = c.id
+LEFT JOIN npsp_imports.contacts con 
+on cm.contactid = con.id
+--LEFT JOIN npsp_imports.accounts a 
+--on cont.accountid = a.id
+LEFT JOIN npsp_imports.segment s 
+on cm.p2a__source__c = s.code__c
+LEFT JOIN npsp_imports.users u 
+ON   u.id=cm.createdbyid
+
+WHERE  campaign_online_offline__c='Online'
+AND campaign_type__c='Advocacy'
+;
