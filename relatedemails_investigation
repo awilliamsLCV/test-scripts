@@ -15,5 +15,5 @@ rex.ranking__c, rex.account_ranking__c,rex.contact_primary_email,  rex.npe01__al
 FROM npsp_imports.contacts con
 JOIN scratch.related_email_expanded rex
 ON con.email=rex.name
-where con.source__c='C4AQAA10GE22'
+where con.source__c IN('C4AQAA10GE22','C4AQAAGE23')
 AND con.id<>rex.contact__c;
