@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS scratch.related_email_expanded;
+CREATE TABLE scratch.related_email_expanded AS
+
+SELECT rel.id, rel.name, rel.createddate, rel.createdbyid, rel.lastmodifieddate, rel.lastmodifiedbyid, rel.contact__c, rel.email_opt_out__c, 
+con.email as contact_primary_email, con.createddate as contact_createddate, con.createdbyid as contact_createdbyid, con.source__c, 
+con.npe01__alternateemail__c, con.npe01__homeemail__c, con.npe01__workemail__c,  con.total_combined_gifts_amount_lifetime__c, con.total_count_of_combined_gifts_lifetime__c, con.ranking__c, con.account_ranking__c
+FROM npsp_imports.related_email rel
+JOIN npsp_imports.contacts con
+ON rel.contact__c=con.id;
+
+
+
+SELECT con.id, con.email, con.source__c, con.createddate, rex.id AS relatedemail_id, rex.contact__c AS relatedemail_contact__c, rex.createddate AS relatedemail_createddate,
+rex.ranking__c, rex.account_ranking__c,rex.contact_primary_email,  rex.npe01__alternateemail__c, rex.npe01__homeemail__c, rex.npe01__workemail__c, rex.total_combined_gifts_amount_lifetime__c, rex.total_count_of_combined_gifts_lifetime__c
+FROM npsp_imports.contacts con
+JOIN scratch.related_email_expanded rex
+ON con.email=rex.name
+where con.source__c='C4AQAA10GE22'
+AND con.id<>rex.contact__c;
