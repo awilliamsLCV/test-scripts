@@ -1,0 +1,34 @@
+DROP TABLE IF EXISTS scratch.ROI_segments;
+CREATE TABLE scratch.ROI_segments
+    AS    
+    
+SELECT seg.id as id,
+        seg.name as name,
+        seg.createddate,
+        seg.createdbyid,
+        seg.campaign__c,
+        seg.cost__c,
+        seg.code__c,
+        seg.segment_channel__c,
+        seg.segment_advertising_source__c,
+        cam.name as campaign_name,
+        cam.parentid as campaign_parent,
+        cam.type as campaign_type,
+        cam.startdate as campaign_startdate,
+        cam.expectedrevenue as campaign_expectedrevenue,
+        cam.budgetedcost as campaign_budgetedcost,
+        cam.actualcost as campaign_actualcost,
+        cam.createddate as campaign_createddate,
+        cam.strategic_program__c as strategic_program,
+        cam.channel__c as campaign_channel,
+        cam.advertising_source__c as campaign_advertising_source,
+        cam.paid_organic__c as paid_organic 
+        --CAST(r.createddate AS DATE) AS role_date,
+        --COALESCE(LEFT(internal_grant_contract_number__c,4),CAST(fiscalyear as varchar(4))) as year,
+        --fiscalquarter as quarter,
+        --DATE_PART('month',opp.closedate) as month,
+
+FROM npsp_imports.segment seg
+LEFT JOIN npsp_imports.campaign cam
+on seg.campaign__c = cam.id
+;
