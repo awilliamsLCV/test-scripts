@@ -1,0 +1,31 @@
+select firstname, 
+middlename,
+lastname, 
+suffix,
+mailingstreet,
+mailingcity,
+mailingstate,
+mailingpostalcode,
+mailingcountry,
+postal_mail_opt_out__c,
+email, 
+hasoptedoutofemail,
+email_opt_out_date__c,
+phone,
+mobilephone, 
+mobile_opt_in__c,
+donotcall,
+gender,
+source__c,
+member_status__c,
+--test comment
+contactid,
+createddate
+from npsp_imports.contacts
+
+where donotexchange = 'f'
+and ranking is null
+and mailingstate = 'TX'
+and npsp__deceased__c = 'f'
+and npsp__do_not_contact__c = 'f'
+and member_status__c ='active' OR member_status__c = 'lapsed'
